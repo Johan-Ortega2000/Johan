@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Animada - Scroll Snap</title>
+  <style>
+    /* Estilos Generales */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden; /* Evita scroll horizontal */
+    }
+
+    .container {
+      height: 100vh; /* Cada sección ocupa la altura completa de la ventana */
+      scroll-snap-type: y mandatory; /* Activa el efecto de snap */
+      overflow-y: scroll; /* Habilita el scroll vertical */
+      scrollbar-width: none; /* Oculta scrollbars en Firefox */
+      -ms-overflow-style: none; /* Oculta scrollbars en IE/Edge */
+    }
+
+    .container::-webkit-scrollbar {
+      display: none; /* Oculta scrollbars en Chrome/Safari */
+    }
+
+    .section {
+      scroll-snap-align: start; /* Cada sección se alinea al inicio */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    /* Estilos de las Secciones */
+    #section1 {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+
+    #section2 {
+      background-color: #0072c6;
+      color: #ffffff;
+    }
+
+    #section3 {
+      background-color: #4b4b4b;
+      color: #ffffff;
+    }
+
+    /* Títulos y Subtítulos */
+    .title {
+      font-size: 4rem;
+      opacity: 0; /* Oculto al inicio */
+      transform: translateY(50px); /* Posición inicial para animación */
+      transition: all 0.9s ease-in-out;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      opacity: 0; /* Oculto al inicio */
+      transform: translateY(50px); /* Posición inicial para animación */
+      transition: all 0.9s ease-in-out;
+    }
+
+    .visible {
+      opacity: 1;
+      transform: translateY(0); /* Animación hacia su posición final */
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <!-- Contenedor Principal -->
+  <div class="container">
+    <!-- Sección 1 -->
+    <section class="section" id="section1">
+      <h1 class="title">RESIDENCIAS PINA HILTON</h1>
+      <p class="subtitle">Esta residencia de 4 pisos cuanta con diversos precios<br>desde los 420.000 a 850.000<br> Incluye Lavanderia, cocina, nevera, ducha caliente, baño compartido<br> Habitaciones Disponibles 4/10 <br><br> </p>
+     <a href="https://maps.app.goo.gl/ww4dVLRcKwfMrMg26" style="font-size: 3em; color:wheat;" target="_blank">Haz click Aqui para ver en el mapa</a>
+      <a href="https://wa.link/ye54ot" style="font-size: 3em; color:wheat;" target="_blank"> <br><br>Whatsapp</a>
+    </section>
+
+    <!-- Sección 2 -->
+    <section class="section" id="section2">
+      <h1 class="title">CASA MARÍN</h1>
+      <p class="subtitle">Es un hogar dónde alquilan habitaciones independientes por semestre<br> cuentan con baño privado, servicios básicos y cocina<br> precios desde $450.000 a 900.000 </p>
+      <a href="https://maps.app.goo.gl/ww4dVLRcKwfMrMg26" style="font-size: 3em; color:wheat;" target="_blank">Haz click Aqui para ver en el mapa</a>
+      <a href="https://wa.link/ye54ot" style="font-size: 3em; color:wheat;" target="_blank"> <br><br>Whatsapp</a>
+    </section>
+
+    <!-- Sección 3 -->
+    <section class="section" id="section3">
+      <h1 class="title">ESPINEL</h1>
+      <p class="subtitle">Residencia universitaria que cuenta con 5 habitaciones <br>servicios incluidos y baño privado, tiene patio y cocina<br>su valor va de 400.000 a 600.000 </p>
+     <a href="https://maps.app.goo.gl/ww4dVLRcKwfMrMg26" style="font-size: 3em; color:wheat;" target="_blank">Haz click Aqui para ver en el mapa</a>
+
+      <a href="https://wa.link/ye54ot" style="font-size: 3em; color:wheat;" target="_blank"> <br><br>Whatsapp</a>
+    </section>
+  </div>
+
+  <script>
+    // Animaciones al hacer scroll
+    const sections = document.querySelectorAll(".section");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const title = entry.target.querySelector(".title");
+          const subtitle = entry.target.querySelector(".subtitle");
+
+          // Añade clase para hacer visibles los textos
+          title.classList.add("visible");
+          subtitle.classList.add("visible");
+        } else {
+          // Quita la clase si la sección ya no está visible
+          const title = entry.target.querySelector(".title");
+          const subtitle = entry.target.querySelector(".subtitle");
+
+          title.classList.remove("visible");
+          subtitle.classList.remove("visible");
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
+</body>
+</html>
